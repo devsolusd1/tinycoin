@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TINYCOIN — Most Valuable Token on Solana</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -92,6 +93,36 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
 .f-disc{font-size:11px;color:#333;line-height:1.7;text-align:center;}
 
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+/* LIVE SUPPLY */
+.live-supply-bar{background:#0d0d0d;border:1px solid rgba(200,169,110,0.15);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:28px;flex-wrap:wrap;}
+.ls-label{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;display:flex;align-items:center;gap:8px;}
+.ls-dot{width:7px;height:7px;border-radius:50%;background:#c8a96e;animation:pulse 2s ease-in-out infinite;}
+.ls-dot.loading{background:#444;animation:none;}
+.ls-value{font-family:'Courier Prime',monospace;font-size:clamp(13px,2vw,18px);color:#c8a96e;font-weight:700;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(200,169,110,0.4);}50%{opacity:0.6;box-shadow:0 0 0 5px rgba(200,169,110,0);}}
+
+/* BURN SECTION */
+.burn-section{background:#0d0d0d;border-top:1px solid rgba(200,169,110,0.07);border-bottom:1px solid rgba(200,169,110,0.07);padding:100px 24px;}
+.burn-inner{max-width:800px;margin:0 auto;}
+.burn-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.08);margin-top:48px;}
+.burn-card{background:#0d0d0d;padding:36px 28px;transition:background 0.2s;}
+.burn-card:hover{background:rgba(200,169,110,0.03);}
+.burn-icon{font-size:24px;margin-bottom:16px;display:block;}
+.burn-card h3{font-size:clamp(16px,2vw,22px);font-weight:500;color:#fff;margin-bottom:12px;}
+.burn-card p{font-size:14px;color:#555;line-height:1.7;font-weight:300;}
+.burn-card p strong{color:#c8a96e;font-weight:500;}
+.burn-history{margin-top:40px;border:1px solid rgba(200,169,110,0.1);background:#0a0a0a;}
+.bh-header{padding:16px 24px;border-bottom:1px solid rgba(200,169,110,0.08);display:flex;justify-content:space-between;align-items:center;}
+.bh-title{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c8a96e;}
+.bh-row{padding:14px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03);font-family:'Courier Prime',monospace;font-size:12px;}
+.bh-row:last-child{border-bottom:none;}
+.bh-date{color:#444;}
+.bh-amt{color:#c8a96e;}
+.bh-tx{color:#333;font-size:10px;text-decoration:none;transition:color 0.2s;}
+.bh-tx:hover{color:#c8a96e;}
+.bh-empty{padding:24px;text-align:center;font-family:'Courier Prime',monospace;font-size:11px;color:#333;letter-spacing:2px;}
+@media(max-width:640px){.burn-grid{grid-template-columns:1fr;}.live-supply-bar{flex-direction:column;align-items:flex-start;}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .reveal.on{opacity:1;transform:none;}
 
@@ -125,6 +156,11 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
   </div>
 
   <a href="https://dexscreener.com/solana/jXckwML4qJGjFhnkTFyCS94Cxsx19R5J5KzATp3tiny" target="_blank" class="btn-dex">View on Dexscreener ↗</a>
+
+  <div class="live-supply-bar">
+    <div class="ls-label"><div class="ls-dot loading" id="lsDot"></div>Live On-chain Supply</div>
+    <div class="ls-value" id="lsValue">Fetching from Solana...</div>
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -208,6 +244,47 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
   </div>
 </section>
 
+<!-- BURN -->
+<section class="burn-section" id="burn">
+  <div class="burn-inner">
+    <div class="reveal">
+      <span class="tag">Deflationary by Design</span>
+      <h2 style="font-size:clamp(28px,4vw,46px);font-weight:600;line-height:1.2;margin-bottom:16px;color:#fff;">Supply only <em style="color:#c8a96e;font-style:italic;">goes down.</em></h2>
+      <p style="font-size:16px;color:#555;line-height:1.8;max-width:540px;">TINYCOIN started at the absolute minimum — 0.00000001. Burns will reduce this further over time, making each remaining fraction even more scarce. There is no floor. Only smaller.</p>
+    </div>
+    <div class="burn-grid reveal">
+      <div class="burn-card">
+        <span class="burn-icon">🔥</span>
+        <h3>What is a Burn?</h3>
+        <p>Burning sends tokens to a <strong>dead wallet</strong> — an address no one controls. Those tokens are permanently removed from circulation, reducing total supply forever.</p>
+      </div>
+      <div class="burn-card">
+        <span class="burn-icon">📉</span>
+        <h3>Only Gets Rarer</h3>
+        <p>Every burn makes TINYCOIN <strong>more scarce</strong>. Starting from the world's smallest supply and going lower — a one-way street toward absolute rarity.</p>
+      </div>
+      <div class="burn-card">
+        <span class="burn-icon">🔒</span>
+        <h3>Mint is Revoked</h3>
+        <p>No one can <strong>create new tokens</strong>. The mint authority was permanently revoked at launch. Supply can only decrease — never increase.</p>
+      </div>
+      <div class="burn-card">
+        <span class="burn-icon">📡</span>
+        <h3>Verified On-chain</h3>
+        <p>Every burn is a <strong>public Solana transaction</strong>. The live supply counter on this page fetches directly from the blockchain — no trust required.</p>
+      </div>
+    </div>
+    <div class="burn-history reveal">
+      <div class="bh-header">
+        <span class="bh-title">◆ Burn History</span>
+        <span style="font-family:'Courier Prime',monospace;font-size:9px;color:#333;letter-spacing:2px;">VERIFIED ON-CHAIN</span>
+      </div>
+      <div class="bh-empty" id="burnHistoryEmpty">No burns yet — initial supply intact · 0.00000001 TINYCOIN</div>
+      <div id="burnHistoryRows"></div>
+    </div>
+  </div>
+</section>
+
 <!-- CA -->
 <section class="ca-section toko-bg">
   <div class="ca-inner reveal">
@@ -229,18 +306,108 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
 </footer>
 
 <script>
+const CA = 'jXckwML4qJGjFhnkTFyCS94Cxsx19R5J5KzATp3tiny';
+const RPC = 'https://api.mainnet-beta.solana.com';
+const DECIMALS = 9;
+
+// ── FAVICON ─────────────────────────────────────────────────────
+(function(){
+  const c=document.createElement('canvas');c.width=c.height=64;
+  const x=c.getContext('2d');
+  x.beginPath();x.arc(32,32,30,0,Math.PI*2);
+  const g=x.createRadialGradient(26,22,4,32,32,30);
+  g.addColorStop(0,'#e8cc9a');g.addColorStop(0.5,'#c8a96e');g.addColorStop(1,'#7a5e35');
+  x.fillStyle=g;x.fill();
+  x.beginPath();x.arc(32,32,30,0,Math.PI*2);
+  x.strokeStyle='#5a4425';x.lineWidth=2.5;x.stroke();
+  x.fillStyle='#0a0a0a';x.font='bold 32px serif';x.textAlign='center';x.textBaseline='middle';
+  x.fillText('T',32,34);
+  const l=document.createElement('link');l.rel='icon';l.href=c.toDataURL();
+  document.head.appendChild(l);
+})();
+
+// ── COPY CA ─────────────────────────────────────────────────────
 function copyCA(btn){
-  navigator.clipboard.writeText('jXckwML4qJGjFhnkTFyCS94Cxsx19R5J5KzATp3tiny');
+  navigator.clipboard.writeText(CA);
   btn.textContent='Copied!';
   setTimeout(()=>btn.textContent='Copy',2000);
 }
+
+// ── LIVE SUPPLY FETCH ────────────────────────────────────────────
+async function fetchSupply(){
+  const dot = document.getElementById('lsDot');
+  const val = document.getElementById('lsValue');
+  try {
+    const res = await fetch(RPC, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        jsonrpc:'2.0', id:1,
+        method:'getTokenSupply',
+        params:[CA]
+      })
+    });
+    const json = await res.json();
+    const raw = json?.result?.value?.amount;
+    if(raw !== undefined){
+      // Convert raw amount with 9 decimals
+      const num = Number(raw) / Math.pow(10, DECIMALS);
+      // Format with 9 decimal places, trim trailing zeros but keep at least 8
+      let formatted = num.toFixed(DECIMALS);
+      // Display nicely
+      val.textContent = formatted + ' TINYCOIN';
+      dot.classList.remove('loading');
+
+      // Also update hero stat
+      const supplyStatEl = document.getElementById('liveSupplyStat');
+      if(supplyStatEl) supplyStatEl.textContent = formatted;
+
+      // Update burn history based on supply change
+      updateBurnStatus(num);
+    } else {
+      val.textContent = 'RPC error — check Solscan';
+      dot.classList.add('loading');
+    }
+  } catch(e) {
+    val.textContent = 'Network error — try refreshing';
+    dot.classList.add('loading');
+  }
+}
+
+function updateBurnStatus(currentSupply){
+  const initial = 0.00000001;
+  const burned = initial - currentSupply;
+  const empty = document.getElementById('burnHistoryEmpty');
+  const rows = document.getElementById('burnHistoryRows');
+  if(burned > 0 && burned < initial){
+    if(empty) empty.style.display = 'none';
+    rows.innerHTML = `
+      <div class="bh-row">
+        <span class="bh-date">On-chain</span>
+        <span class="bh-amt">−${burned.toFixed(DECIMALS)} TINYCOIN burned</span>
+        <a class="bh-tx" href="https://solscan.io/token/${CA}" target="_blank">View on Solscan ↗</a>
+      </div>
+      <div class="bh-row">
+        <span class="bh-date" style="color:#c8a96e">Current</span>
+        <span class="bh-amt">${currentSupply.toFixed(DECIMALS)} TINYCOIN remaining</span>
+        <span class="bh-date">${((burned/initial)*100).toFixed(4)}% burned</span>
+      </div>`;
+  } else {
+    if(empty) empty.style.display = 'block';
+  }
+}
+
+// Fetch on load, then every 30 seconds
+fetchSupply();
+setInterval(fetchSupply, 30000);
+
+// ── SCROLL REVEAL ────────────────────────────────────────────────
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 
-// Responsive about grid
 if(window.innerWidth < 640){
-  const aboutGrid = document.querySelector('.section-inner [style*="grid-template-columns"]');
-  if(aboutGrid) aboutGrid.style.gridTemplateColumns = '1fr';
+  const g = document.querySelector('.section-inner [style*="grid-template-columns"]');
+  if(g) g.style.gridTemplateColumns = '1fr';
 }
 </script>
 </body>
