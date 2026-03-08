@@ -92,6 +92,16 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
 .f-logo{font-family:'Courier Prime',monospace;font-size:16px;letter-spacing:4px;color:#c8a96e;opacity:0.25;}
 .f-disc{font-size:11px;color:#333;line-height:1.7;text-align:center;}
 
+.chart-notice{max-width:480px;text-align:left;border:1px solid rgba(200,169,110,0.18);background:rgba(200,169,110,0.04);padding:16px 20px;margin-top:20px;display:flex;gap:12px;align-items:flex-start;}
+.chart-notice-icon{color:#c8a96e;font-size:14px;flex-shrink:0;margin-top:1px;}
+.chart-notice p{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.5px;color:#555;line-height:1.7;}
+.chart-notice p strong{color:#c8a96e;}
+.x-notice{border:1px solid rgba(200,169,110,0.35);background:rgba(200,169,110,0.06);padding:32px 36px;margin-top:32px;text-align:center;}
+.x-notice-label{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c8a96e;margin-bottom:14px;}
+.x-notice p{font-size:14px;color:#666;line-height:1.75;font-weight:300;margin-bottom:20px;}
+.btn-x{display:inline-flex;align-items:center;gap:10px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:14px 36px;background:#c8a96e;color:#0a0a0a;font-weight:700;text-decoration:none;transition:all 0.2s;}
+.btn-x:hover{background:#e8cc9a;transform:translateY(-2px);}
+.btn-x svg{width:16px;height:16px;fill:#0a0a0a;flex-shrink:0;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
 
 /* LIVE SUPPLY */
@@ -102,27 +112,7 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
 .ls-value{font-family:'Courier Prime',monospace;font-size:clamp(13px,2vw,18px);color:#c8a96e;font-weight:700;}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(200,169,110,0.4);}50%{opacity:0.6;box-shadow:0 0 0 5px rgba(200,169,110,0);}}
 
-/* BURN SECTION */
-.burn-section{background:#0d0d0d;border-top:1px solid rgba(200,169,110,0.07);border-bottom:1px solid rgba(200,169,110,0.07);padding:100px 24px;}
-.burn-inner{max-width:800px;margin:0 auto;}
-.burn-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.08);margin-top:48px;}
-.burn-card{background:#0d0d0d;padding:36px 28px;transition:background 0.2s;}
-.burn-card:hover{background:rgba(200,169,110,0.03);}
-.burn-icon{font-size:24px;margin-bottom:16px;display:block;}
-.burn-card h3{font-size:clamp(16px,2vw,22px);font-weight:500;color:#fff;margin-bottom:12px;}
-.burn-card p{font-size:14px;color:#555;line-height:1.7;font-weight:300;}
-.burn-card p strong{color:#c8a96e;font-weight:500;}
-.burn-history{margin-top:40px;border:1px solid rgba(200,169,110,0.1);background:#0a0a0a;}
-.bh-header{padding:16px 24px;border-bottom:1px solid rgba(200,169,110,0.08);display:flex;justify-content:space-between;align-items:center;}
-.bh-title{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c8a96e;}
-.bh-row{padding:14px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03);font-family:'Courier Prime',monospace;font-size:12px;}
-.bh-row:last-child{border-bottom:none;}
-.bh-date{color:#444;}
-.bh-amt{color:#c8a96e;}
-.bh-tx{color:#333;font-size:10px;text-decoration:none;transition:color 0.2s;}
-.bh-tx:hover{color:#c8a96e;}
-.bh-empty{padding:24px;text-align:center;font-family:'Courier Prime',monospace;font-size:11px;color:#333;letter-spacing:2px;}
-@media(max-width:640px){.burn-grid{grid-template-columns:1fr;}.live-supply-bar{flex-direction:column;align-items:flex-start;}}
+@media(max-width:640px){.live-supply-bar{flex-direction:column;align-items:flex-start;}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .reveal.on{opacity:1;transform:none;}
 
@@ -156,6 +146,11 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
   </div>
 
   <a href="https://dexscreener.com/solana/eZGHmXnKENDNcjvQKjPSNnLL49onZ1jhaTeVxg5tiny" target="_blank" class="btn-dex">View on Dexscreener ↗</a>
+
+  <div class="chart-notice">
+    <span class="chart-notice-icon">⚠</span>
+    <p>The chart may look unusual due to TINYCOIN's microscopic supply. This is expected — there are only <strong>0.00000001 tokens</strong> in existence. Price per unit may appear extreme. That's the point.</p>
+  </div>
 
   <div class="live-supply-bar">
     <div class="ls-label"><div class="ls-dot loading" id="lsDot"></div>Live On-chain Supply</div>
@@ -244,47 +239,6 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
   </div>
 </section>
 
-<!-- BURN -->
-<section class="burn-section" id="burn">
-  <div class="burn-inner">
-    <div class="reveal">
-      <span class="tag">Deflationary by Design</span>
-      <h2 style="font-size:clamp(28px,4vw,46px);font-weight:600;line-height:1.2;margin-bottom:16px;color:#fff;">Supply only <em style="color:#c8a96e;font-style:italic;">goes down.</em></h2>
-      <p style="font-size:16px;color:#555;line-height:1.8;max-width:540px;">TINYCOIN started at the absolute minimum — 0.000001. Burns will reduce this further over time, making each remaining fraction even more scarce. There is no floor. Only smaller.</p>
-    </div>
-    <div class="burn-grid reveal">
-      <div class="burn-card">
-        <span class="burn-icon">🔥</span>
-        <h3>What is a Burn?</h3>
-        <p>Burning sends tokens to a <strong>dead wallet</strong> — an address no one controls. Those tokens are permanently removed from circulation, reducing total supply forever.</p>
-      </div>
-      <div class="burn-card">
-        <span class="burn-icon">📉</span>
-        <h3>Only Gets Rarer</h3>
-        <p>Every burn makes TINYCOIN <strong>more scarce</strong>. Starting from the world's smallest supply and going lower — a one-way street toward absolute rarity.</p>
-      </div>
-      <div class="burn-card">
-        <span class="burn-icon">🔒</span>
-        <h3>Mint is Revoked</h3>
-        <p>No one can <strong>create new tokens</strong>. The mint authority was permanently revoked at launch. Supply can only decrease — never increase.</p>
-      </div>
-      <div class="burn-card">
-        <span class="burn-icon">📡</span>
-        <h3>Verified On-chain</h3>
-        <p>Every burn is a <strong>public Solana transaction</strong>. The live supply counter on this page fetches directly from the blockchain — no trust required.</p>
-      </div>
-    </div>
-    <div class="burn-history reveal">
-      <div class="bh-header">
-        <span class="bh-title">◆ Burn History</span>
-        <span style="font-family:'Courier Prime',monospace;font-size:9px;color:#333;letter-spacing:2px;">VERIFIED ON-CHAIN</span>
-      </div>
-      <div class="bh-empty" id="burnHistoryEmpty">No burns yet — initial supply intact · 0.000001 TINYCOIN</div>
-      <div id="burnHistoryRows"></div>
-    </div>
-  </div>
-</section>
-
 <!-- CA -->
 <section class="ca-section toko-bg">
   <div class="ca-inner reveal">
@@ -296,6 +250,15 @@ footer{padding:40px;display:flex;justify-content:space-between;align-items:cente
     </div>
     <p class="ca-warning">⚠ Always verify the contract address on official channels before buying.</p>
     <a href="https://dexscreener.com/solana/eZGHmXnKENDNcjvQKjPSNnLL49onZ1jhaTeVxg5tiny" target="_blank" class="btn-dex-outline">View on Dexscreener ↗</a>
+
+    <div class="x-notice">
+      <div class="x-notice-label">◆ Official X (Twitter)</div>
+      <p>Follow the official TINYCOIN account for updates, announcements, and the latest on the world's smallest token.</p>
+      <a href="https://x.com/tinycoinsoll" target="_blank" class="btn-x">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @tinycoinsoll ↗
+      </a>
+    </div>
   </div>
 </section>
 
@@ -361,9 +324,6 @@ async function fetchSupply(){
       // Also update hero stat
       const supplyStatEl = document.getElementById('liveSupplyStat');
       if(supplyStatEl) supplyStatEl.textContent = formatted;
-
-      // Update burn history based on supply change
-      updateBurnStatus(num);
     } else {
       val.textContent = 'RPC error — check Solscan';
       dot.classList.add('loading');
@@ -371,29 +331,6 @@ async function fetchSupply(){
   } catch(e) {
     val.textContent = 'Network error — try refreshing';
     dot.classList.add('loading');
-  }
-}
-
-function updateBurnStatus(currentSupply){
-  const initial = 0.000001;
-  const burned = initial - currentSupply;
-  const empty = document.getElementById('burnHistoryEmpty');
-  const rows = document.getElementById('burnHistoryRows');
-  if(burned > 0 && burned < initial){
-    if(empty) empty.style.display = 'none';
-    rows.innerHTML = `
-      <div class="bh-row">
-        <span class="bh-date">On-chain</span>
-        <span class="bh-amt">−${burned.toFixed(DECIMALS)} TINYCOIN burned</span>
-        <a class="bh-tx" href="https://solscan.io/token/${CA}" target="_blank">View on Solscan ↗</a>
-      </div>
-      <div class="bh-row">
-        <span class="bh-date" style="color:#c8a96e">Current</span>
-        <span class="bh-amt">${currentSupply.toFixed(DECIMALS)} TINYCOIN remaining</span>
-        <span class="bh-date">${((burned/initial)*100).toFixed(4)}% burned</span>
-      </div>`;
-  } else {
-    if(empty) empty.style.display = 'block';
   }
 }
 
